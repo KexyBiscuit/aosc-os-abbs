@@ -1,0 +1,3 @@
+VER=88.0.673.0
+SRCTBL="https://repo.aosc.io/aosc-repacks/microsoft-edge/Microsoft%20Edge_88.0.673.0_Linux%20x64_chromium.tar"
+CHKSUM="sha256::69B66D7CCDFFE9408E2377AA4F634E145B6D14A304329B244EC40B5FC8EA0D3E"

@@ -1,0 +1,37 @@
+--- a/out/Release/link.ninja	2020-10-22 05:45:41.686557400 +0800
++++ b/out/Release/link.ninja	2020-10-22 05:41:54.501886100 +0800
+@@ -28,34 +28,5 @@
+     nacl_helper $
+     swiftshader_libEGL.so $
+     swiftshader_libGLESv2.so $
+-    chromium-browser-beta_88.0.673.0-1_amd64.deb $
+-    chromium-browser-beta-88.0.673.0-1.x86_64.rpm $
+-    deb_msedge.deps $
+-    deb_msedge_sandbox.deps $
+-    deb_nacl_helper.deps $
+-    deb_nacl_helper_bootstrap.deps $
+-    deb_nacl_irt_x86_64.deps $
+-    deb_libEGL.deps $
+-    deb_libGLESv2.deps $
+-    deb_swiftshader_libEGL.deps $
+-    deb_swiftshader_libGLESv2.deps $
+-    rpm_msedge.deps $
+-    rpm_msedge_sandbox.deps $
+-    rpm_nacl_helper.deps $
+-    rpm_nacl_helper_bootstrap.deps $
+-    rpm_nacl_irt_x86_64.deps $
+-    rpm_libEGL.deps $
+-    rpm_libGLESv2.deps $
+-    rpm_swiftshader_libEGL.deps $
+-    rpm_swiftshader_libGLESv2.deps $
+-    deb_common.deps $
+-    rpm_common.deps $
+-    installer/version.txt $
+-    chromium-browser-stable_88.0.673.0-1_amd64.deb $
+-    chromium-browser-stable-88.0.673.0-1.x86_64.rpm $
+-    msedge.debug $
+-    msedge.stripped $
+-    chromium-browser-unstable_88.0.673.0-1_amd64.deb $
+-    chromium-browser-unstable-88.0.673.0-1.x86_64.rpm $
+ 
+ default all

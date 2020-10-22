@@ -1,0 +1,72 @@
+cd ${EDGE_ROOT}/src/out/Release
+
+abinfo "Build Microsoft Edge"
+ninja
+
+abinfo "Link Microsoft Edge"
+ninja -f link.ninja
+
+abinfo "Install Microsoft Edge"
+mkdir $PKGDIR
+mkdir -p ${PKGDIR}/usr/lib/microsoft-edge
+
+# FIXME: default-app-block is not used, see src/out/Release/installer/common/postinst.include
+# FIXME: use dev channel in wrapper for now, change them when channel changes
+mv locales MEIPreload swiftshader *.so crashpad_handler \
+  icudtl.dat msedge msedge_100_percent.pak \
+  msedge_200_percent.pak msedge_sandbox \
+  msedgedriver nacl_helper nacl_helper_bootstrap nacl_irt_x86_64.nexe \
+  resources.pak v8_context_snapshot.bin xdg-mime xdg-settings \
+  installer/common/wrapper \
+  installer/theme/product_logo_16.png \
+  installer/theme/product_logo_24.png \
+  installer/theme/product_logo_32.png \
+  installer/theme/product_logo_32.xpm \
+  installer/theme/product_logo_48.png \
+  installer/theme/product_logo_64.png \
+  installer/theme/product_logo_128.png \
+  installer/theme/product_logo_256.png \
+  ${PKGDIR}/usr/lib/microsoft-edge
+sed -i "s/@@CHANNEL@@/dev/" ${PKGDIR}/usr/lib/microsoft-edge/wrapper
+sed -i "s/@@PROGNAME@@/msedge/" ${PKGDIR}/usr/lib/microsoft-edge/wrapper
+mv ${PKGDIR}/usr/lib/microsoft-edge/wrapper ${PKGDIR}/usr/lib/microsoft-edge/microsoft-edge
+
+mkdir -p ${PKGDIR}/usr/bin
+ln -s /usr/lib/microsoft-edge/microsoft-edge "$PKGDIR"/usr/bin/microsoft-edge
+
+PACKAGE="microsoft-edge"
+MENUNAME="Microsoft Edge"
+INSTALLDIR="\/usr\/lib\/microsoft-edge"
+
+mkdir -p ${PKGDIR}/usr/share/appdata
+mv installer/common/microsoft-edge.appdata.xml.template ${PKGDIR}/usr/share/appdata/microsoft-edge.appdata.xml
+sed -i "s/@@PACKAGE@@/${PACKAGE}/" ${PKGDIR}/usr/share/appdata/microsoft-edge.appdata.xml
+# FIXME: what license is Microsoft Edge built from source code?
+# sed -i "s/Freeware under Microsoft Edge Terms of Service/?/" ${PKGDIR}/usr/share/appdata/microsoft-edge.appdata.xml
+sed -i "s/@@MENUNAME@@/${MENUNAME}/" ${PKGDIR}/usr/share/appdata/microsoft-edge.appdata.xml
+sed -i "s/@@FULLDESC@@/Microsoft Edge is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier./" ${PKGDIR}/usr/share/appdata/microsoft-edge.appdata.xml
+sed -i "s/@@PRODUCTURL@@/https:\/\/aosc.io\//" ${PKGDIR}/usr/share/appdata/microsoft-edge.appdata.xml
+sed -i "s/<developer_name>Microsoft<\/developer_name>/AOSC/" ${PKGDIR}/usr/share/appdata/microsoft-edge.appdata.xml
+sed -i "s/https:\/\/techcommunity.microsoft.com\/t5\/Microsoft-Edge-Insider\/ct-p\/MicrosoftEdgeInsider/https:\/\/aosc.io\//" ${PKGDIR}/usr/share/appdata/microsoft-edge.appdata.xml
+
+mkdir -p ${PKGDIR}/usr/share/applications
+mv installer/common/desktop.template ${PKGDIR}/usr/share/applications/microsoft-edge.desktop
+sed -i "s/@@MENUNAME@@/${MENUNAME}/" ${PKGDIR}/usr/share/applications/microsoft-edge.desktop
+sed -i "s/@@USR_BIN_SYMLINK_NAME@@/microsoft-edge/" ${PKGDIR}/usr/share/applications/microsoft-edge.desktop
+sed -i "s/@@PACKAGE@@/${PACKAGE}/" ${PKGDIR}/usr/share/applications/microsoft-edge.desktop
+
+mkdir -p ${PKGDIR}/usr/share/man/man1
+mv installer/common/manpage.1.in ${PKGDIR}/usr/share/man/man1/microsoft-edge.1
+
+mkdir -p ${PKGDIR}/usr/share/gnome-control-center/default-apps
+mv installer/common/default-app.template ${PKGDIR}/usr/share/gnome-control-center/default-apps/microsoft-edge.xml
+sed -i "s/@@MENUNAME@@/${MENUNAME}/" ${PKGDIR}/usr/share/gnome-control-center/default-apps/microsoft-edge.xml
+sed -i "s/@@INSTALLDIR@@/${INSTALLDIR}/" ${PKGDIR}/usr/share/gnome-control-center/default-apps/microsoft-edge.xml
+sed -i "s/@@PACKAGE@@/${PACKAGE}/" ${PKGDIR}/usr/share/gnome-control-center/default-apps/microsoft-edge.xml
+
+mkdir -p ${PKGDIR}/usr/share/menu
+mv installer/debian/debian.menu ${PKGDIR}/usr/share/menu/microsoft-edge.menu
+sed -i "s/@@MENUNAME@@/${MENUNAME}/" ${PKGDIR}/usr/share/menu/microsoft-edge.menu
+sed -i "s/@@INSTALLDIR@@/${INSTALLDIR}/" ${PKGDIR}/usr/share/menu/microsoft-edge.menu
+sed -i "s/@@LOGO_RESOURCE_XPM@@/product_logo_32.xpm/" ${PKGDIR}/usr/share/menu/microsoft-edge.menu
+sed -i "s/@@PACKAGE@@/${PACKAGE}/" ${PKGDIR}/usr/share/menu/microsoft-edge.menu

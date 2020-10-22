@@ -1,0 +1,8 @@
+PKGNAME=microsoft-edge
+PKGDES="The web browser from Microsoft"
+PKGDEP="alsa-lib at-spi2-atk at-spi2-core atk ca-certs cairo cups \
+        dbus expat gcc-runtime gdk-pixbuf glib glibc gtk-3 libdrm \
+        liberation-fonts libxcb libxkbcommon mesa nspr nss pango \
+        util-linux wget x11-lib xdg-utils"
+PKGSEC=web 
+FAIL_ARCH="!amd64"

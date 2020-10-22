@@ -1,0 +1,12 @@
+abinfo "Install depot_tools"
+pushd ..
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+popd
+
+abinfo "Set environment variables"
+export PATH="${PATH}:${PWD}/depot_tools"
+export EDGE_ROOT="${PWD}/.."
+
+abinfo "Dirty hack around link_toolchain.ninja"
+mkdir -p /var/usr/bin
+ln -s /usr/bin/python /var/usr/bin/python
