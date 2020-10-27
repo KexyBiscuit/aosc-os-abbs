@@ -1,6 +1,7 @@
 cd ${EDGE_ROOT}/src/out/Release
 
 abinfo "Build Microsoft Edge"
+find -name '*.a' -delete
 ninja
 
 abinfo "Link Microsoft Edge"
